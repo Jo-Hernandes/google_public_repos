@@ -7,32 +7,44 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.jonathas.googlepublicrepositories.commons.observe
 import com.jonathas.googlepublicrepositories.databinding.FragmentHomeBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+    ): View =
+        FragmentHomeBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            _binding = this
+        }.root
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        observe(homeViewModel.repositoryList, ::setupRecyclerView)
+
+        homeViewModel.fetchData()
+    }
+
+    private fun setupRecyclerView(repositoryList: List<HomeRepoModel>) = with(binding) {
+
+        val adapter = RepositoryListAdapter().apply {
+            this.repositoryList = repositoryList
         }
-        return root
+
+        rvRepositoryList.adapter = adapter
+
     }
 
     override fun onDestroyView() {

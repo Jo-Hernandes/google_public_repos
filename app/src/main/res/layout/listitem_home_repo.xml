@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="repo"
+            type="com.jonathas.googlepublicrepositories.ui.home.HomeRepoModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_default"
+        app:cardCornerRadius="@dimen/margin_default_half"
+        app:cardElevation="@dimen/margin_default_half"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                error="@{ @drawable/ic_launcher_foreground }"
+                imageUrl="@{repo.image}"
+                placeholder="@{ @drawable/ic_launcher_foreground }"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_default"
+                android:text="@{repo.name}"
+                tools:text="Repository Name" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

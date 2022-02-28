@@ -1,13 +1,38 @@
 package com.jonathas.googlepublicrepositories.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.jonathas.googlepublicrepositories.commons.observeOnMainThread
+import io.reactivex.disposables.Disposable
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val getData: GetDataUseCase
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private var repositoryDisposable: Disposable? = null
+        set(value) {
+            field?.dispose()
+            field = value
+        }
+
+    private val _repositoryList: MutableLiveData<List<HomeRepoModel>> = MutableLiveData()
+    val repositoryList: LiveData<List<HomeRepoModel>> get() = _repositoryList
+
+    fun fetchData() {
+        repositoryDisposable = getData(1)
+            .observeOnMainThread()
+            .subscribe(_repositoryList::postValue){
+                it.printStackTrace()
+            }
     }
-    val text: LiveData<String> = _text
+
+
+    override fun onCleared() {
+        super.onCleared()
+        repositoryDisposable?.dispose()
+        repositoryDisposable = null
+    }
+
 }

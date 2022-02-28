@@ -10,9 +10,10 @@ task clean(type: Delete) {
 }
 
 ext {
+    koin_version = '3.1.2'
     architecture_version = '2.1.0'
     lifecycle_version = '2.4.1'
     rxjava_version = '2.2.21'
     okhttp_version = '5.0.0-alpha.2'
-    retrofit_version = '2.7.0'
+    retrofit_version = '2.9.0'
 }

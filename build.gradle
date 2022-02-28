@@ -8,3 +8,11 @@ plugins {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    architecture_version = '2.1.0'
+    lifecycle_version = '2.4.1'
+    rxjava_version = '2.2.21'
+    okhttp_version = '5.0.0-alpha.2'
+    retrofit_version = '2.7.0'
+}

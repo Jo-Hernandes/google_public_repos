@@ -1,9 +1,10 @@
-package com.jonathas.googlepublicrepositories.ui.home
+package com.jonathas.googlepublicrepositories.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jonathas.googlepublicrepositories.databinding.ListitemHomeRepoBinding
+import com.jonathas.googlepublicrepositories.ui.home.HomeRepoModel
 
 class RepositoryListAdapter : RecyclerView.Adapter<RepositoryListAdapter.RepositoryItem>() {
 
